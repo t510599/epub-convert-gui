@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+group 'tech.stoneapp'
+version '0.1'
+def main = 'tech.stoneapp.epub.AppStarter'
+mainClassName = main
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '15.0.1'
+    modules = [ 'javafx.controls' ]
+}
+
+def javaFXPlatform = getJavaFXPlatform()
+def javaFXVersion = "15.0.1"
+
+dependencies {
+    compile 'com.github.houbb:opencc4j:1.6.0'
+    compile 'org.apache.commons:commons-compress:1.20'
+    compile 'commons-cli:commons-cli:1.4'
+    runtimeOnly "org.openjfx:javafx-base:${javaFXVersion}:${javaFXPlatform}"
+    runtimeOnly "org.openjfx:javafx-controls:${javaFXVersion}:${javaFXPlatform}"
+    runtimeOnly "org.openjfx:javafx-graphics:${javaFXVersion}:${javaFXPlatform}"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': main
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+// Based on this StackOverflow answer: https://stackoverflow.com/a/65209664/653519
+private static String getJavaFXPlatform() {
+    def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+    if (currentOS.isWindows()) {
+        return 'win'
+    } else if (currentOS.isLinux()) {
+        return 'linux'
+    } else if (currentOS.isMacOsX()) {
+        return 'mac'
+    }
+    return null
+}
