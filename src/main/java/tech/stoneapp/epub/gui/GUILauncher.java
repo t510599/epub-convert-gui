@@ -1,24 +1,40 @@
 package tech.stoneapp.epub.gui;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class GUILauncher extends Application {
+    private final int screenWidth = 720;
+    private final int screenHeight = 540;
+    private static Stage mainStage;
+    private static Stage settingsStage;
+
     @Override
     public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            mainStage = stage;
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/app.fxml"));
+            Scene scene = new Scene(root, screenWidth, screenHeight);
+
+            mainStage.setTitle("EPUB Convert");
+            mainStage.setScene(scene);
+            mainStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSettings() {
+        settingsStage = new Stage();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 }
