@@ -22,7 +22,7 @@ def javaFXPlatform = getJavaFXPlatform()
 def javaFXVersion = "15.0.1"
 
 dependencies {
-    compile 'com.google.code.gson:2.8.7'
+    compile 'com.google.code.gson:gson:2.8.7'
     compile 'com.github.houbb:opencc4j:1.6.0'
     compile 'org.apache.commons:commons-compress:1.20'
     compile 'commons-cli:commons-cli:1.4'
