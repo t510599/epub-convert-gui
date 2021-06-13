@@ -1,7 +1,7 @@
 package tech.stoneapp.epub.convertor;
 
-
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 public class TextFileConvertor {
@@ -9,10 +9,11 @@ public class TextFileConvertor {
 
     public TextFileConvertor() {}
 
-    public ByteArrayOutputStream convert(InputStream fileStream) {
+    public InputStream convert(InputStream fileStream) {
         String content = new BufferedReader(new InputStreamReader(fileStream))
                 .lines().collect(Collectors.joining("\n"));
         String translatedContent = translator.translate(content);
-        return new ByteArrayOutputStream();
+
+        return new ByteArrayInputStream(translatedContent.getBytes(StandardCharsets.UTF_8));
     }
 }

@@ -2,6 +2,8 @@ package tech.stoneapp.epub.model;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import tech.stoneapp.epub.convertor.EPUBConvertor;
+import tech.stoneapp.epub.exception.NotEPUBException;
 
 import java.io.*;
 
@@ -11,17 +13,23 @@ public class EPUBFile {
     private File file;
     private ConvertStatus status = ConvertStatus.PENDING;
 
-    public EPUBFile(String filepath) throws FileNotFoundException {
-        this.file = new File(filepath);
+    public EPUBFile(String filepath) throws FileNotFoundException, NotEPUBException {
+        this.file = new File(filepath).getAbsoluteFile();
         if (!this.file.exists()) {
             throw new FileNotFoundException();
+        }
+        if (this.file.isDirectory()) {
+            throw new NotEPUBException();
         }
 
         this.path = this.file.getAbsolutePath();
         this.filename = this.file.getName();
     }
 
-    public void updateStatus(ConvertStatus status) {
+    // signature security
+    // https://stackoverflow.com/a/18634125/9039813
+    // only EPUBConvertor should be able to update status
+    public void updateStatus(ConvertStatus status, EPUBConvertor.EPUBAccessor accessor) {
         this.status = status;
     }
 

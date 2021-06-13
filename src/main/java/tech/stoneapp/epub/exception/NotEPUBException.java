@@ -1,2 +1,4 @@
-package tech.stoneapp.epub.exception;public class NotEPUBException {
+package tech.stoneapp.epub.exception;
+
+public class NotEPUBException extends Throwable {
 }
