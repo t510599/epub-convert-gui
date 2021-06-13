@@ -7,6 +7,7 @@ import tech.stoneapp.epub.exception.NotEPUBException;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Objects;
 
 public class EPUBFile {
     private String filename;
@@ -31,6 +32,8 @@ public class EPUBFile {
     // https://stackoverflow.com/a/18634125/9039813
     // only EPUBConvertor should be able to update status
     public void updateStatus(ConvertStatus status, EPUBConvertor.EPUBAccessor accessor) {
+        // slap you with NullPointerException
+        Objects.requireNonNull(accessor);
         this.status = status;
     }
 
