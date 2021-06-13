@@ -33,6 +33,10 @@ public class GUILauncher extends Application {
         settingsStage = new Stage();
     }
 
+    public static Stage getMainStage() {
+        return mainStage;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
