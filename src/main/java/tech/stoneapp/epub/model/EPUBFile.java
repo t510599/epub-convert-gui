@@ -6,6 +6,7 @@ import tech.stoneapp.epub.convertor.EPUBConvertor;
 import tech.stoneapp.epub.exception.NotEPUBException;
 
 import java.io.*;
+import java.nio.file.Files;
 
 public class EPUBFile {
     private String filename;
@@ -18,7 +19,7 @@ public class EPUBFile {
         if (!this.file.exists()) {
             throw new FileNotFoundException();
         }
-        if (this.file.isDirectory()) {
+        if (this.file.isDirectory() || !isEPUB(this.file)) {
             throw new NotEPUBException();
         }
 
@@ -31,6 +32,14 @@ public class EPUBFile {
     // only EPUBConvertor should be able to update status
     public void updateStatus(ConvertStatus status, EPUBConvertor.EPUBAccessor accessor) {
         this.status = status;
+    }
+
+    public static boolean isEPUB(File file) {
+        try {
+            return Files.probeContentType(file.toPath()).equals("application/epub+zip");
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     public String getFilename() {
