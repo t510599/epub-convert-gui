@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.AppController">
    <children>
-      <TableView fx:id="filelist" layoutX="30.0" layoutY="60.0" prefHeight="320.0" prefWidth="660.0">
+      <TableView fx:id="fileList" layoutX="30.0" layoutY="60.0" prefHeight="320.0" prefWidth="660.0">
         <placeholder>
           <Label>Drop files here or click select files...</Label>
         </placeholder>
@@ -18,14 +18,15 @@
       </TableView>
       <Pane fx:id="status" layoutX="30.0" layoutY="390.0" prefHeight="130.0" prefWidth="660.0" style="-fx-background-color: white;">
          <children>
-            <ProgressBar fx:id="progressbar" layoutX="230.0" layoutY="29.0" prefWidth="200.0" progress="0.0" />
-            <Button fx:id="convertButton" layoutX="300.0" layoutY="77.0" mnemonicParsing="false" text="Convert" />
-            <Label layoutX="440.0" layoutY="31.0" text="0 / 10" />
-         </children></Pane>
-      <Button layoutX="30.0" layoutY="30.0" mnemonicParsing="false" text="Select Directory..." />
-      <Button layoutX="152.0" layoutY="30.0" mnemonicParsing="false" text="Select Files" />
-      <Button layoutX="627.0" layoutY="30.0" mnemonicParsing="false" text="Remove" />
+            <ProgressBar fx:id="progressbar" layoutX="230.0" layoutY="30.0" prefWidth="200.0" progress="0.0" />
+            <Button fx:id="convertButton" layoutX="300.0" layoutY="75.0" mnemonicParsing="false" text="Convert" />
+            <Label fx:id="progressLabel" layoutX="314.0" layoutY="14.0" text="0 / 10" />
+         </children>
+      </Pane>
+      <Button fx:id="selectDirectoryButton" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" text="Select Directory..." />
+      <Button fx:id="selectFileButton" layoutX="152.0" layoutY="30.0" mnemonicParsing="false" text="Select Files..." />
+      <Button fx:id="removeFileButton" disable="true" layoutX="627.0" layoutY="30.0" mnemonicParsing="false" text="Remove" />
        <!-- placeholder of settings icon -->
-      <Circle fill="DODGERBLUE" layoutX="704.0" layoutY="16.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="settings" fill="DODGERBLUE" layoutX="704.0" layoutY="16.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>
