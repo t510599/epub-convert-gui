@@ -1,27 +1,34 @@
 package tech.stoneapp.epub.model;
 
-import java.util.ArrayList;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AppState {
-    private ArrayList<EPUBFile> files;
+    private ObservableList<EPUBFile> files = FXCollections.observableArrayList();
+    private ObjectProperty<AppMode> mode = new SimpleObjectProperty<>(AppMode.SELECTING);
     private int convertedFiles = 0;
-    private AppMode mode;
 
     public AppState() {
         init();
     }
 
     public void init() {
-        this.files = new ArrayList<>();
-        this.convertedFiles = 0;
-        mode = AppMode.SELECTING;
+        files.clear();
+        convertedFiles = 0;
+        mode.setValue(AppMode.SELECTING);
     }
 
     public void addFile(EPUBFile file) {
         files.add(file);
     }
 
-    public ArrayList<EPUBFile> getFiles() {
+    public ObservableList<EPUBFile> getFiles() {
         return files;
+    }
+
+    public AppMode getMode() {
+        return mode.getValue();
     }
 }
