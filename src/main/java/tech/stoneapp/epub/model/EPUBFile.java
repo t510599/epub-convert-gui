@@ -60,5 +60,26 @@ public class EPUBFile {
     public ConvertStatus getStatus() {
         return status.getValue();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EPUBFile epubFile = (EPUBFile) o;
+
+        if (!Objects.equals(filename, epubFile.filename)) return false;
+        if (!Objects.equals(path, epubFile.path)) return false;
+        if (!Objects.equals(file, epubFile.file)) return false;
+        return status != null ? status.getValue().equals(epubFile.status.getValue()) : epubFile.status == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = filename != null ? filename.hashCode() : 0;
+        result = 31 * result + (path != null ? path.hashCode() : 0);
+        result = 31 * result + (file != null ? file.hashCode() : 0);
+        result = 31 * result + (status != null ? status.getValue().hashCode() : 0);
+        return result;
     }
 }

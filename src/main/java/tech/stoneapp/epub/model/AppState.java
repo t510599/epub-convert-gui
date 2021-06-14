@@ -21,6 +21,9 @@ public class AppState {
     }
 
     public void addFile(EPUBFile file) {
+        // keep uniqueness
+        if (files.contains(file)) return;
+
         files.add(file);
     }
 
