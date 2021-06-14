@@ -4,5 +4,10 @@ public enum ConvertStatus {
     PENDING,
     CONVERTING,
     SUCCESS,
-    FAILED
+    FAILED;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }
