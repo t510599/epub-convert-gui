@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -46,6 +48,11 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fileList.setItems(state.getFiles());
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
+        pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
+
         addFileButton.setOnMouseClicked(ev -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select EPUB files...");
