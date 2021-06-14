@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +54,11 @@ public class AppController implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
+        Arrays.asList(showFileButton, removeFileButton)
+                .forEach(btn ->
+                        btn.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems()))
+                );
+
         addFileButton.setOnMouseClicked(ev -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select EPUB files...");
@@ -79,6 +85,18 @@ public class AppController implements Initializable {
                 e.printStackTrace();
             }
             importEPUB(files);
+        });
+
+        showFileButton.setOnMouseClicked(ev -> {
+            EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
+            HostServices host = GUILauncher.getHost();
+
+            host.showDocument(selectedFile.getFile().toURI().toString());
+        });
+
+        removeFileButton.setOnMouseClicked(ev -> {
+            EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
+            state.removeFile(selectedFile);
         });
     }
 

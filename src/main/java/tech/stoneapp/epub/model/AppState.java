@@ -27,6 +27,10 @@ public class AppState {
         files.add(file);
     }
 
+    public void removeFile(EPUBFile file) {
+        files.remove(file);
+    }
+
     public ObservableList<EPUBFile> getFiles() {
         return files;
     }
