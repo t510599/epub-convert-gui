@@ -1,7 +1,7 @@
 package tech.stoneapp.epub.model;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
-import org.apache.commons.compress.archivers.zip.ZipFile;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import tech.stoneapp.epub.convertor.EPUBConvertor;
 import tech.stoneapp.epub.exception.NotEPUBException;
 
@@ -13,7 +13,7 @@ public class EPUBFile {
     private String filename;
     private String path;
     private File file;
-    private ConvertStatus status = ConvertStatus.PENDING;
+    private ObjectProperty<ConvertStatus> status = new SimpleObjectProperty<>(ConvertStatus.PENDING);
 
     public EPUBFile(String filepath) throws FileNotFoundException, NotEPUBException {
         this.file = new File(filepath).getAbsoluteFile();
@@ -34,7 +34,7 @@ public class EPUBFile {
     public void updateStatus(ConvertStatus status, EPUBConvertor.EPUBAccessor accessor) {
         // slap you with NullPointerException
         Objects.requireNonNull(accessor);
-        this.status = status;
+        this.status.setValue(status);
     }
 
     public static boolean isEPUB(File file) {
@@ -58,6 +58,7 @@ public class EPUBFile {
     }
 
     public ConvertStatus getStatus() {
-        return status;
+        return status.getValue();
+    }
     }
 }
