@@ -18,16 +18,17 @@ import tech.stoneapp.epub.model.EPUBFile;
 
 public class AppController implements Initializable {
     @FXML AnchorPane root;
-    @FXML Button selectDirectoryButton;
+    @FXML Button importDirectoryButton;
+    @FXML Button addFileButton;
     @FXML Button removeFileButton;
-    @FXML Button selectFileButton;
+    @FXML Button showFileButton;
 
     @FXML TableView<EPUBFile> fileList;
     @FXML TableColumn<EPUBFile, String> statusColumn;
     @FXML TableColumn<EPUBFile, String> nameColumn;
     @FXML TableColumn<EPUBFile, String> pathColumn;
 
-    @FXML Pane status;
+    @FXML Pane statusPane;
     @FXML Label progressLabel;
     @FXML Button convertButton;
     @FXML ProgressBar progressbar;
