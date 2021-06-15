@@ -1,3 +1,7 @@
 #statusPane {
     -fx-background-color: white;
 }
+
+#progressLabel {
+    -fx-text-alignment: center;
+}
