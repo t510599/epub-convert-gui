@@ -5,4 +5,9 @@ public enum AppMode {
     CONVERTING,
     INTERRUPTED,
     DONE;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }
