@@ -57,7 +57,11 @@ public class EPUBFile {
         return file;
     }
 
-    public ConvertStatus getStatus() {
+    public ObjectProperty<ConvertStatus> getStatus() {
+        return status;
+    }
+
+    public ConvertStatus getStatusValue() {
         return status.getValue();
     }
 
