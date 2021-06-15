@@ -48,6 +48,7 @@ public class AppController implements Initializable {
     @FXML TableColumn<EPUBFile, String> pathColumn;
 
     @FXML Pane statusPane;
+    @FXML Label modeLabel;
     @FXML Label progressLabel;
     @FXML Button convertButton;
     @FXML ProgressBar progressbar;
@@ -180,6 +181,7 @@ public class AppController implements Initializable {
         bindProgressLabel(state.getModeValue());
         bindProgressBar(state.getModeValue());
 
+        modeLabel.textProperty().bind(state.getMode().asString());
         /* status pane setup end */
     }
 
