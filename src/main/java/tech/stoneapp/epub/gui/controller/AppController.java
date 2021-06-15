@@ -26,6 +26,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import tech.stoneapp.epub.exception.NotEPUBException;
 import tech.stoneapp.epub.gui.GUILauncher;
+import tech.stoneapp.epub.model.AppMode;
 import tech.stoneapp.epub.model.AppState;
 import tech.stoneapp.epub.model.EPUBFile;
 
@@ -139,6 +140,8 @@ public class AppController implements Initializable {
     }
 
     private void importEPUB(List<File> files) {
+        // reset
+        if (state.getModeValue() != AppMode.SELECTING) state.init();
         if (files == null) return;
 
         for (File f: files) {
