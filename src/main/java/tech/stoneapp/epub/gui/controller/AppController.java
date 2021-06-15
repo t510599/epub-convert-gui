@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,11 +24,14 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+import org.apache.commons.compress.archivers.ArchiveException;
+import tech.stoneapp.epub.convertor.EPUBConvertor;
 import tech.stoneapp.epub.exception.NotEPUBException;
 import tech.stoneapp.epub.gui.GUILauncher;
 import tech.stoneapp.epub.model.AppMode;
 import tech.stoneapp.epub.model.AppState;
 import tech.stoneapp.epub.model.EPUBFile;
+import tech.stoneapp.epub.util.Pair;
 
 public class AppController implements Initializable {
     @FXML AnchorPane root;
@@ -46,6 +51,9 @@ public class AppController implements Initializable {
     @FXML ProgressBar progressbar;
 
     private AppState state = new AppState();
+    private EPUBConvertor convertor = EPUBConvertor.getInstance();
+    private ConversionTask conversionTask;
+    private Thread conversionThread;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -145,6 +153,16 @@ public class AppController implements Initializable {
             ev.consume();
         });
         /* file list setup end */
+
+        /* status pane setup start */
+        convertButton.setOnMouseClicked(ev -> {
+            if (state.getModeValue() == AppMode.SELECTING)
+                startConversion();
+            else
+                interruptConversion();
+        });
+        /* status pane setup end */
+    }
     }
 
     private void importEPUB(List<File> files) {
@@ -160,6 +178,63 @@ public class AppController implements Initializable {
                 continue;
             }
             state.addFile(epub);
+        }
+    }
+
+    private void startConversion() {
+        if (state.getModeValue() != AppMode.SELECTING) return;
+
+        conversionTask = new ConversionTask(state.getFiles());
+        conversionTask.setOnSucceeded(ev -> {
+            state.setMode(AppMode.DONE);
+        });
+        conversionTask.setOnFailed(ev -> {
+            state.setMode(AppMode.INTERRUPTED);
+        });
+
+        if (conversionThread != null && conversionThread.isAlive()) conversionThread.interrupt();
+
+        conversionThread = new Thread(conversionTask);
+        conversionThread.setDaemon(true);
+        conversionThread.start();
+
+        // state should change after task starts, or binding would get wrong task.
+        state.setMode(AppMode.CONVERTING);
+    }
+
+    private void interruptConversion() {
+        if (state.getModeValue() != AppMode.CONVERTING) return;
+
+        if (conversionThread != null) conversionThread.interrupt();
+        state.setMode(AppMode.INTERRUPTED);
+    }
+
+    private class ConversionTask extends Task<Pair<Integer, Integer>> {
+        int successConversion = 0;
+        int failedConversion = 0;
+        List<EPUBFile> files;
+
+        public ConversionTask(List<EPUBFile> files) {
+            this.files = files;
+        }
+
+        @Override
+        public Pair<Integer, Integer> call() throws InterruptedException {
+            this.updateProgress(0, files.size());
+            for (EPUBFile file: files) {
+                try {
+                    convertor.convert(file);
+                    successConversion++;
+                } catch (IOException | ArchiveException e) {
+                    // Interruption is dealt in convertor
+                    failedConversion++;
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    throw e;
+                }
+                this.updateProgress(successConversion + failedConversion, files.size());
+            }
+            return new Pair<>(successConversion, failedConversion);
         }
     }
 }
