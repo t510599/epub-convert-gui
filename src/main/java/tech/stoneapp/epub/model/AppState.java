@@ -34,7 +34,15 @@ public class AppState {
         return files;
     }
 
-    public AppMode getMode() {
+    public ObjectProperty<AppMode> getMode() {
+        return mode;
+    }
+
+    public AppMode getModeValue() {
         return mode.getValue();
+    }
+
+    public void setMode(AppMode mode) {
+        this.mode.set(mode);
     }
 }
