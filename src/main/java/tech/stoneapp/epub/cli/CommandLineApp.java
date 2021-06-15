@@ -28,7 +28,7 @@ public class CommandLineApp {
                 }
                 message = String.format(message, epub.getFilename());
                 System.out.printf("%s Elapsed time: %.2f s%n", message, (float)(currentTime - startTime) / 1000);
-            } catch (IOException | ArchiveException e) {
+            } catch (IOException | ArchiveException | InterruptedException e) {
                 e.printStackTrace();
             } catch (NotEPUBException e) {
                 System.out.printf("%s is not an EPUB. Skipped.%n", filepath);

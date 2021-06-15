@@ -15,6 +15,7 @@ import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 
+import tech.stoneapp.epub.model.AppConfig;
 import tech.stoneapp.epub.model.EPUBFile;
 import tech.stoneapp.epub.model.ConvertStatus;
 
@@ -37,7 +38,7 @@ public class EPUBConvertor {
         return instance;
     }
 
-    public void convert(EPUBFile epub) throws IOException, ArchiveException {
+    public void convert(EPUBFile epub) throws IOException, ArchiveException, InterruptedException {
         if (epub.getStatusValue() != ConvertStatus.PENDING) return;
 
         epub.updateStatus(ConvertStatus.CONVERTING, accessor);
@@ -51,6 +52,9 @@ public class EPUBConvertor {
 
             Enumeration<ZipArchiveEntry> entries = file.getEntries();
             while (entries.hasMoreElements()) {
+                // stop conversion if interrupt signal occurs.
+                if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
+
                 entry = entries.nextElement();
 
                 if (entry == null || entry.isDirectory()) continue;
@@ -74,14 +78,17 @@ public class EPUBConvertor {
             newEPUB.finish();
             newMemoryFile.close();
 
-            // save to disk
+            // save to disk, if not interruption
+            // in case interrupt signal wasn't caught in while loop above
+            if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
+
             Path outputPath = Paths.get(epub.getFile().getParent(), ZhConverterUtil.toTraditional(epub.getFilename()));
             OutputStream newFile = new FileOutputStream(outputPath.toString());
             newFile.write(newMemoryFile.toByteArray());
             newFile.close();
 
             epub.updateStatus(ConvertStatus.SUCCESS, accessor);
-        } catch (IOException | ArchiveException ex) {
+        } catch (IOException | ArchiveException | InterruptedException ex) {
             epub.updateStatus(ConvertStatus.FAILED, accessor);
             throw ex;
         }
