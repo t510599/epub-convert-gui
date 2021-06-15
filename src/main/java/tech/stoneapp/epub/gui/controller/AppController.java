@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -97,6 +98,43 @@ public class AppController implements Initializable {
         removeFileButton.setOnMouseClicked(ev -> {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
             state.removeFile(selectedFile);
+        });
+        // drag and drop
+        fileList.setOnDragOver(ev -> {
+            if (ev.getDragboard().hasFiles()) {
+                ev.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                // TODO: animation of drag over
+            }
+            ev.consume();
+        });
+
+        fileList.setOnDragDropped(ev -> {
+            if (ev.getDragboard().hasFiles()) {
+                List<File> files = ev.getDragboard().getFiles();
+
+                // import files
+                importEPUB(files.stream()
+                        .filter(File::isFile)
+                        .filter(f -> f.getName().endsWith(".epub"))
+                        .collect(Collectors.toList()));
+
+                // import directories
+                List<File> directories = files.stream().filter(File::isDirectory).collect(Collectors.toList());
+                List<List<File>> recursiveFiles = new ArrayList<>();
+                for (File directory: directories) {
+                    try {
+                        List<File> fileInDirectory = Files.walk(directory.toPath())
+                                .filter(path -> path.toString().endsWith(".epub"))
+                                .map(Path::toFile)
+                                .collect(Collectors.toList());
+                        recursiveFiles.add(fileInDirectory);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                importEPUB(recursiveFiles.stream().flatMap(List::stream).collect(Collectors.toList()));
+            }
+            ev.consume();
         });
     }
 
