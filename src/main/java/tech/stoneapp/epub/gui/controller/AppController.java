@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -161,8 +163,53 @@ public class AppController implements Initializable {
             else
                 interruptConversion();
         });
+        convertButton.disableProperty().bind(state.getMode().isEqualTo(AppMode.DONE)
+                .or(state.getMode().isEqualTo(AppMode.INTERRUPTED)));
+        convertButton.textProperty().bind(
+                Bindings.when(state.getMode().isEqualTo(AppMode.CONVERTING))
+                        .then("Cancel")
+                        .otherwise("Convert")
+        );
+
+        // prevent conversionTask == null
+        state.getMode().addListener((observable, oldValue, newValue) -> {
+            bindProgressLabel(newValue);
+            bindProgressBar(newValue);
+        });
+        // initialize with default value
+        bindProgressLabel(state.getModeValue());
+        bindProgressBar(state.getModeValue());
+
         /* status pane setup end */
     }
+
+    private void bindProgressLabel(AppMode mode) {
+        StringBinding binding;
+        if (mode == AppMode.SELECTING || conversionTask == null) {
+            binding = Bindings.createStringBinding(
+                    () -> MessageFormat.format("0 / {0}", state.getFiles().getSize()),
+                    state.getFiles().sizeProperty()
+            );
+        } else {
+            binding = Bindings.createStringBinding(
+                    () -> MessageFormat.format("{0} / {1}", conversionTask.getWorkDone(), conversionTask.getTotalWork()),
+                    conversionTask.workDoneProperty(),
+                    conversionTask.totalWorkProperty()
+            );
+        }
+
+        progressLabel.textProperty().bind(binding);
+    }
+
+    private void bindProgressBar(AppMode mode) {
+        ReadOnlyDoubleProperty binding;
+        if (mode == AppMode.SELECTING || conversionTask == null) {
+            binding = new ReadOnlyDoubleWrapper(0);
+        } else {
+            binding = conversionTask.progressProperty();
+        }
+
+        progressbar.progressProperty().bind(binding);
     }
 
     private void importEPUB(List<File> files) {
