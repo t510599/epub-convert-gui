@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javafx.application.HostServices;
@@ -51,15 +49,33 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /* file list setup start */
+
+        // set table
         fileList.setItems(state.getFiles());
         statusColumn.setCellValueFactory(data -> data.getValue().getStatus().asString());
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        Arrays.asList(showFileButton, removeFileButton)
-                .forEach(btn ->
-                        btn.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems()))
-                );
+        // file buttons
+        importDirectoryButton.setOnMouseClicked(ev -> {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Select directory...");
+
+            File selectedDirectory = directoryChooser.showDialog(GUILauncher.getMainStage());
+            List<File> files = null;
+            try {
+                if (selectedDirectory != null) {
+                    files = Files.walk(selectedDirectory.toPath())
+                            .filter(path -> path.toString().endsWith(".epub"))
+                            .map(Path::toFile)
+                            .collect(Collectors.toList());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            importEPUB(files);
+        });
 
         addFileButton.setOnMouseClicked(ev -> {
             FileChooser fileChooser = new FileChooser();
@@ -72,25 +88,10 @@ public class AppController implements Initializable {
             importEPUB(selectedFiles);
         });
 
-        importDirectoryButton.setOnMouseClicked(ev -> {
-            DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle("Select directory...");
-
-            File selectedDirectory = directoryChooser.showDialog(GUILauncher.getMainStage());
-            List<File> files = null;
-            try {
-                files = Files.walk(selectedDirectory.toPath())
-                        .filter(path -> path.toString().endsWith(".epub"))
-                        .map(Path::toFile)
-                        .collect(Collectors.toList());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            importEPUB(files);
-        });
-
+        // table item buttons
         showFileButton.setOnMouseClicked(ev -> {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
+
             HostServices host = GUILauncher.getHost();
 
             host.showDocument(selectedFile.getFile().toURI().toString());
@@ -100,6 +101,12 @@ public class AppController implements Initializable {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
             state.removeFile(selectedFile);
         });
+
+        Arrays.asList(showFileButton, removeFileButton)
+                .forEach(btn ->
+                        btn.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems()))
+                );
+
         // drag and drop
         fileList.setOnDragOver(ev -> {
             if (ev.getDragboard().hasFiles()) {
@@ -137,6 +144,7 @@ public class AppController implements Initializable {
             }
             ev.consume();
         });
+        /* file list setup end */
     }
 
     private void importEPUB(List<File> files) {
