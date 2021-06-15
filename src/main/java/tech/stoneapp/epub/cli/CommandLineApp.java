@@ -20,7 +20,7 @@ public class CommandLineApp {
 
                 long currentTime = System.currentTimeMillis();
                 String message = "";
-                switch (epub.getStatus()) {
+                switch (epub.getStatusValue()) {
                     case PENDING -> message = "File %s has not been converted.";
                     case SUCCESS -> message = "%s has been converted successfully.";
                     case FAILED -> message = "Conversion of %s has failed.";

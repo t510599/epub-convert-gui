@@ -38,7 +38,7 @@ public class EPUBConvertor {
     }
 
     public void convert(EPUBFile epub) throws IOException, ArchiveException {
-        if (epub.getStatus() != ConvertStatus.PENDING) return;
+        if (epub.getStatusValue() != ConvertStatus.PENDING) return;
 
         epub.updateStatus(ConvertStatus.CONVERTING, accessor);
 

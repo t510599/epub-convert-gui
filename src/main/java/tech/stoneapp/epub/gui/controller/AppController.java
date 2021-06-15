@@ -50,7 +50,7 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileList.setItems(state.getFiles());
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        statusColumn.setCellValueFactory(data -> data.getValue().getStatus().asString());
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 
