@@ -99,6 +99,12 @@ public class AppController implements Initializable {
             importEPUB(selectedFiles);
         });
 
+        // we should not modify file list while converting.
+        Arrays.asList(importDirectoryButton, addFileButton)
+                .forEach(btn ->
+                        btn.disableProperty().bind(state.getMode().isEqualTo(AppMode.CONVERTING))
+                );
+
         // table item buttons
         showFileButton.setOnMouseClicked(ev -> {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
@@ -112,16 +118,18 @@ public class AppController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Show In Folder is not supported on your system.").show();
             };
         });
+        // only available if file got selected
+        showFileButton.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems()));
 
         removeFileButton.setOnMouseClicked(ev -> {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
             state.removeFile(selectedFile);
-        });
 
-        Arrays.asList(showFileButton, removeFileButton)
-                .forEach(btn ->
-                        btn.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems()))
-                );
+            if (state.getModeValue() != AppMode.SELECTING) state.setMode(AppMode.SELECTING);
+        });
+        // we should not modify file list while converting.
+        removeFileButton.disableProperty().bind(Bindings.isEmpty(fileList.getSelectionModel().getSelectedItems())
+                .or(state.getMode().isEqualTo(AppMode.CONVERTING)));
 
         // drag and drop
         fileList.setOnDragOver(ev -> {
@@ -174,7 +182,8 @@ public class AppController implements Initializable {
                 interruptConversion();
         });
         convertButton.disableProperty().bind(state.getMode().isEqualTo(AppMode.DONE)
-                .or(state.getMode().isEqualTo(AppMode.INTERRUPTED)));
+                .or(state.getMode().isEqualTo(AppMode.INTERRUPTED))
+                .or(state.getFiles().sizeProperty().isEqualTo(0))); // No file
         convertButton.textProperty().bind(
                 Bindings.when(state.getMode().isNotEqualTo(AppMode.CONVERTING))
                         .then("Convert")
