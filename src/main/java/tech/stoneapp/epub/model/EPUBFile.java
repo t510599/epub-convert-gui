@@ -12,6 +12,8 @@ import java.util.Objects;
 public class EPUBFile {
     private String filename;
     private String path;
+    private String outputPath;
+
     private File file;
     private ObjectProperty<ConvertStatus> status = new SimpleObjectProperty<>(ConvertStatus.PENDING);
 
@@ -37,6 +39,11 @@ public class EPUBFile {
         this.status.setValue(status);
     }
 
+    public void updateOutputPath(String path, EPUBConvertor.EPUBAccessor accessor) {
+        Objects.requireNonNull(accessor);
+        outputPath = path;
+    }
+
     public static boolean isEPUB(File file) {
         try {
             return Files.probeContentType(file.toPath()).equals("application/epub+zip");
@@ -51,6 +58,10 @@ public class EPUBFile {
 
     public String getPath() {
         return path;
+    }
+
+    public String getOutputPath() {
+        return outputPath;
     }
 
     public File getFile() {
