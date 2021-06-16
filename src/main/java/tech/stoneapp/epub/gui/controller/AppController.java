@@ -174,9 +174,9 @@ public class AppController implements Initializable {
         convertButton.disableProperty().bind(state.getMode().isEqualTo(AppMode.DONE)
                 .or(state.getMode().isEqualTo(AppMode.INTERRUPTED)));
         convertButton.textProperty().bind(
-                Bindings.when(state.getMode().isEqualTo(AppMode.CONVERTING))
-                        .then("Cancel")
-                        .otherwise("Convert")
+                Bindings.when(state.getMode().isNotEqualTo(AppMode.CONVERTING))
+                        .then("Convert")
+                        .otherwise("Cancel")
         );
 
         // prevent conversionTask == null
