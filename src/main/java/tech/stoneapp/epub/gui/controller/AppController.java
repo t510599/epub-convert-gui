@@ -250,10 +250,15 @@ public class AppController implements Initializable {
         if (state.getModeValue() != AppMode.SELECTING) return;
 
         conversionTask = new ConversionTask(state.getFiles());
+        // bind event listeners
         conversionTask.setOnSucceeded(ev -> {
             state.setMode(AppMode.DONE);
         });
         conversionTask.setOnFailed(ev -> {
+            state.setMode(AppMode.INTERRUPTED);
+        });
+        conversionTask.setOnCancelled(ev -> {
+//            progressbar.style
             state.setMode(AppMode.INTERRUPTED);
         });
 
@@ -270,7 +275,7 @@ public class AppController implements Initializable {
     private void interruptConversion() {
         if (state.getModeValue() != AppMode.CONVERTING) return;
 
-        if (conversionThread != null) conversionThread.interrupt();
+        if (conversionTask != null) conversionTask.cancel();
         state.setMode(AppMode.INTERRUPTED);
     }
 
