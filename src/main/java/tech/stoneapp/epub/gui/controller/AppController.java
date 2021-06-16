@@ -131,6 +131,14 @@ public class AppController implements Initializable {
             if (ev.getDragboard().hasFiles()) {
                 List<File> files = ev.getDragboard().getFiles();
 
+                // only show alert if there is only one file and it is not an EPUB.
+                if (files.size() == 1 && files.get(0).isFile() && !EPUBFile.isEPUB(files.get(0))) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "This file is not EPUB!");
+                    alert.show();
+                    ev.consume();
+                    return;
+                }
+
                 // import files
                 importEPUB(files.stream()
                         .filter(File::isFile)
@@ -219,6 +227,8 @@ public class AppController implements Initializable {
         if (state.getModeValue() != AppMode.SELECTING) state.init();
         if (files == null) return;
 
+        int beforeImportFilesCount = state.getFiles().size();
+
         for (File f: files) {
             EPUBFile epub;
             try {
@@ -228,6 +238,12 @@ public class AppController implements Initializable {
             }
             state.addFile(epub);
         }
+
+        Alert importAlert = new Alert(
+                Alert.AlertType.INFORMATION,
+                MessageFormat.format("Imported Files: {0}", state.getFiles().size() - beforeImportFilesCount)
+        );
+        importAlert.show();
     }
 
     private void startConversion() {
