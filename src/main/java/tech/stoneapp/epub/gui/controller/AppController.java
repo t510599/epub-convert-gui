@@ -26,7 +26,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-import org.apache.commons.compress.archivers.ArchiveException;
 import tech.stoneapp.epub.convertor.EPUBConvertor;
 import tech.stoneapp.epub.exception.NotEPUBException;
 import tech.stoneapp.epub.gui.GUILauncher;
@@ -290,17 +289,18 @@ public class AppController implements Initializable {
 
         @Override
         public Pair<Integer, Integer> call() throws InterruptedException {
+            // put initial value so the progress won't be -1/-1
             this.updateProgress(0, files.size());
             for (EPUBFile file: files) {
                 try {
                     convertor.convert(file);
                     successConversion++;
-                } catch (IOException | ArchiveException e) {
+                } catch (InterruptedException e) {
+                    throw e;
+                } catch (Exception e) {
                     // Interruption is dealt in convertor
                     failedConversion++;
                     e.printStackTrace();
-                } catch (InterruptedException e) {
-                    throw e;
                 }
                 this.updateProgress(successConversion + failedConversion, files.size());
             }
