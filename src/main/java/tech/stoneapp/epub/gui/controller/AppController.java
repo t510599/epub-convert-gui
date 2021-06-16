@@ -314,7 +314,6 @@ public class AppController implements Initializable {
             state.setMode(AppMode.INTERRUPTED);
         });
         conversionTask.setOnCancelled(ev -> {
-//            progressbar.style
             state.setMode(AppMode.INTERRUPTED);
         });
 
