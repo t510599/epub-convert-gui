@@ -88,7 +88,7 @@ public class EPUBConvertor {
             newFile.close();
 
             epub.updateStatus(ConvertStatus.SUCCESS, accessor);
-        } catch (IOException | ArchiveException | InterruptedException ex) {
+        } catch (Exception ex) {
             epub.updateStatus(ConvertStatus.FAILED, accessor);
             throw ex;
         }
