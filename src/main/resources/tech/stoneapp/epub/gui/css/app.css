@@ -1,7 +1,87 @@
+/* general style */
+.button {
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px 10px 5px 10px;
+    -fx-background-color: #EEE;
+    -fx-background-radius: 4px;
+    -fx-text-fill: #5A5A5A;
+}
+
+.primary.button {
+    -fx-border-color: #00ADEA;
+    -fx-background-color: #00ADEA;
+    -fx-text-fill: #FFF;
+}
+
+.negative.button {
+    -fx-border-color: #B85052;
+    -fx-background-color: #B85052;
+    -fx-text-fill: #FFF;
+}
+
+#root {
+    -fx-background-color: #FFF;
+}
+
+/* file list */
+#fileList.table-view {
+    -fx-background-radius: 2.5px;
+}
+
+#fileList .column-header {
+    -fx-background-color: #F7F7F7;
+    -fx-border-width: 0 2px 0 0;
+    -fx-border-color: #E9E9E9;
+}
+
+#fileList .virtual-flow .scroll-bar:vertical,
+#fileList .virtual-flow .scroll-bar:vertical .track,
+#fileList .virtual-flow .scroll-bar:vertical .track-background,
+#fileList .virtual-flow .scroll-bar:horizontal,
+#fileList .virtual-flow .scroll-bar:horizontal .track,
+#fileList .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+#fileList .virtual-flow .scroll-bar .increment-button,
+#fileList .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+.table-view .virtual-flow .scroll-bar .thumb {
+    -fx-background-color: #E9E9E9;
+}
+
+.table-view .virtual-flow .scroll-bar .thumb:pressed {
+    -fx-background-color: #919191;
+}
+
+/* status pane */
 #statusPane {
-    -fx-background-color: white;
+    -fx-border-color: #D9D9D9;
+    -fx-border-width: 1.25px;
+    -fx-border-radius: 2.5px;
+    -fx-background-color: #FFFFFF;
 }
 
 #progressLabel {
     -fx-text-alignment: center;
+}
+
+#progressbar > .bar {
+    -fx-background-insets: 0;
+    -fx-background-color: #919191;
+}
+
+#progressbar > .track {
+    -fx-background-color: #E9E9E9;
+}
+
+#progressbar.positive > .bar {
+    -fx-background-color: #8BB96E;
+}
+#progressbar.negative > .bar {
+    -fx-background-color: #CE5F58;
 }
