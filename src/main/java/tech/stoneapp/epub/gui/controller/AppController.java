@@ -139,26 +139,22 @@ public class AppController implements Initializable {
                 }
 
                 // import files
-                importEPUB(files.stream()
-                        .filter(File::isFile)
-                        .filter(f -> f.getName().endsWith(".epub"))
-                        .collect(Collectors.toList()));
-
-                // import directories
-                List<File> directories = files.stream().filter(File::isDirectory).collect(Collectors.toList());
-                List<List<File>> recursiveFiles = new ArrayList<>();
-                for (File directory: directories) {
-                    try {
-                        List<File> fileInDirectory = Files.walk(directory.toPath())
-                                .filter(path -> path.toString().endsWith(".epub"))
-                                .map(Path::toFile)
-                                .collect(Collectors.toList());
-                        recursiveFiles.add(fileInDirectory);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                List<File> epubFiles = new ArrayList<>();
+                for (var f: files) {
+                    if (!f.exists()) continue;
+                    if (f.isFile() && f.getName().endsWith(".epub")) epubFiles.add(f);
+                    if (f.isDirectory()) {
+                        try {
+                            epubFiles.addAll(
+                                    Files.walk(f.toPath()).filter(path -> path.toString().endsWith(".epub"))
+                                            .map(Path::toFile).collect(Collectors.toList())
+                            );
+                        } catch (IOException e) {
+                            continue;
+                        }
                     }
                 }
-                importEPUB(recursiveFiles.stream().flatMap(List::stream).collect(Collectors.toList()));
+                importEPUB(epubFiles);
             }
             ev.consume();
         });
