@@ -116,7 +116,13 @@ public class AppController implements Initializable {
                 targetPath = selectedFile.getOutputPath();
             }
 
-            if (!DesktopAPI.showInFolder(new File(targetPath))) {
+            File targetFile = new File(targetPath);
+            if (!targetFile.exists()) {
+                new Alert(Alert.AlertType.ERROR, "File may be moved or deleted.").show();
+                return;
+            }
+
+            if (!DesktopAPI.showInFolder(targetFile)) {
                 new Alert(Alert.AlertType.ERROR, "Show In Folder is not supported on your system.").show();
             };
         });
