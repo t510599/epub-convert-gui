@@ -67,6 +67,16 @@ public class AppController implements Initializable {
         // set table
         fileList.setItems(state.getFiles());
         statusColumn.setCellValueFactory(data -> data.getValue().getStatus().asString());
+        statusColumn.setCellFactory(data -> new TableCell<>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) return;
+
+                toggleClassMap(this, Map.of("positive", item.equals("SUCCESS"), "negative", item.equals("FAILED")));
+                setText(item);
+            }
+        });
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("path"));
 

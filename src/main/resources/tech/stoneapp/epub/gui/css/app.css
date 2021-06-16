@@ -58,6 +58,16 @@
     -fx-background-color: #919191;
 }
 
+/* -fx-text-fill would be override, so use -fx-text-background-color instead. See https://stackoverflow.com/a/26998283/9039813. */
+.table-cell.positive {
+    -fx-font-weight: bold;
+    -fx-text-background-color: #8BB96E;
+}
+.table-cell.negative {
+    -fx-font-weight: bold;
+    -fx-text-background-color: #CE5F58;
+}
+
 /* status pane */
 #statusPane {
     -fx-border-color: #D9D9D9;
