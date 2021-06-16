@@ -10,7 +10,6 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
@@ -31,7 +30,9 @@ import tech.stoneapp.epub.exception.NotEPUBException;
 import tech.stoneapp.epub.gui.GUILauncher;
 import tech.stoneapp.epub.model.AppMode;
 import tech.stoneapp.epub.model.AppState;
+import tech.stoneapp.epub.model.ConvertStatus;
 import tech.stoneapp.epub.model.EPUBFile;
+import tech.stoneapp.epub.util.DesktopAPI;
 import tech.stoneapp.epub.util.Pair;
 
 public class AppController implements Initializable {
@@ -101,10 +102,15 @@ public class AppController implements Initializable {
         // table item buttons
         showFileButton.setOnMouseClicked(ev -> {
             EPUBFile selectedFile = fileList.getSelectionModel().getSelectedItem();
+            String targetPath = selectedFile.getPath();
 
-            HostServices host = GUILauncher.getHost();
+            if (selectedFile.getStatusValue() == ConvertStatus.SUCCESS) {
+                targetPath = selectedFile.getOutputPath();
+            }
 
-            host.showDocument(selectedFile.getFile().toURI().toString());
+            if (!DesktopAPI.showInFolder(new File(targetPath))) {
+                new Alert(Alert.AlertType.ERROR, "Show In Folder is not supported on your system.").show();
+            };
         });
 
         removeFileButton.setOnMouseClicked(ev -> {

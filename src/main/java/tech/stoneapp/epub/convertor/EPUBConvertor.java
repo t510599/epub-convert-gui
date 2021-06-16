@@ -87,6 +87,7 @@ public class EPUBConvertor {
             newFile.write(newMemoryFile.toByteArray());
             newFile.close();
 
+            epub.updateOutputPath(outputPath.toAbsolutePath().toString(), accessor);
             epub.updateStatus(ConvertStatus.SUCCESS, accessor);
         } catch (Exception ex) {
             epub.updateStatus(ConvertStatus.FAILED, accessor);
