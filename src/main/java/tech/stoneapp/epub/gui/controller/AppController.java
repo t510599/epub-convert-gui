@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -171,6 +172,13 @@ public class AppController implements Initializable {
                 importEPUB(epubFiles);
             }
             ev.consume();
+        });
+
+        // unselect file
+        root.setOnKeyPressed(ev -> {
+            if (ev.getCode() == KeyCode.ESCAPE) {
+                fileList.getSelectionModel().clearSelection();
+            }
         });
         /* file list setup end */
 
