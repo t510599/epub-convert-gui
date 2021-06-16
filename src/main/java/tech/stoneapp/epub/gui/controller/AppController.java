@@ -16,6 +16,7 @@ import javafx.beans.property.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -199,9 +200,26 @@ public class AppController implements Initializable {
         );
 
         // prevent conversionTask == null
+        // complex binding for state changes
         state.getMode().addListener((observable, oldValue, newValue) -> {
             bindProgressLabel(newValue);
             bindProgressBar(newValue);
+
+            Map<String, Boolean> convertButtonClassMap;
+            if (newValue != AppMode.CONVERTING) {
+                convertButtonClassMap = Map.of("primary", true, "negative", false);
+            } else {
+                convertButtonClassMap = Map.of("primary", false, "negative", true);
+            }
+            toggleClassMap(convertButton, convertButtonClassMap);
+
+            Map<String, Boolean> progressbarClassMap;
+            switch (newValue) {
+                case DONE -> progressbarClassMap = Map.of("positive", true, "negative", false);
+                case INTERRUPTED -> progressbarClassMap = Map.of("positive", false, "negative", true);
+                default -> progressbarClassMap = Map.of("positive", false, "negative", false);
+            }
+            toggleClassMap(progressbar, progressbarClassMap);
         });
         // initialize with default value
         bindProgressLabel(state.getModeValue());
@@ -238,6 +256,20 @@ public class AppController implements Initializable {
         }
 
         progressbar.progressProperty().bind(binding);
+    }
+
+    private void toggleClass(Node node, String className, boolean enable) {
+        List<String> classList = node.getStyleClass();
+        if (classList.contains(className) != enable) {
+            if (enable) classList.add(className);
+            else classList.remove(className);
+        }
+    }
+
+    private void toggleClassMap(Node node, Map<String, Boolean> classMap) {
+        for (var entry: classMap.entrySet()) {
+            toggleClass(node, entry.getKey(), entry.getValue());
+        }
     }
 
     private void importEPUB(List<File> files) {
