@@ -17,6 +17,12 @@ public class AppConfig {
 
     public AppConfig() {}
 
+    public AppConfig(String outputPath, OutputFilenameMode outputMode, boolean outputOverwrite) {
+        outputDirectory = outputPath;
+        outputFilenameMode = outputMode;
+        overwrite = outputOverwrite;
+    }
+
     public AppConfig(String outputPath, OutputFilenameMode outputMode, boolean outputOverwrite, AlertType minAlertLevel) {
         outputDirectory = outputPath;
         outputFilenameMode = outputMode;
@@ -89,6 +95,14 @@ public class AppConfig {
         @Override
         public String toString() {
             return description;
+        }
+
+        public static OutputFilenameMode fromName(String name) {
+            for (OutputFilenameMode mode: OutputFilenameMode.values()) {
+                if (mode.name().equals(name)) return mode;
+            }
+
+            return null;
         }
     }
 }
