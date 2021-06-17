@@ -30,6 +30,11 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        filenameChoiceBox.getItems().addAll(
+                AppConfig.OutputFilenameMode.TRANSLATE,
+                AppConfig.OutputFilenameMode.SUFFIX,
+                AppConfig.OutputFilenameMode.BOTH
+        );
         cancelButton.setOnMouseClicked(ev -> {
             GUILauncher.getSettingsStage().close();
         });
