@@ -1,0 +1,22 @@
+.button {
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px 10px 5px 10px;
+    -fx-background-color: #EEE;
+    -fx-background-radius: 4px;
+    -fx-text-fill: #5A5A5A;
+
+    -fx-cursor: hand;
+}
+
+.primary.button {
+    -fx-border-color: #00ADEA;
+    -fx-background-color: #00ADEA;
+    -fx-text-fill: #FFF;
+}
+
+.negative.button {
+    -fx-border-color: #B85052;
+    -fx-background-color: #B85052;
+    -fx-text-fill: #FFF;
+}
