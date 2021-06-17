@@ -6,7 +6,7 @@
 
 <VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="480.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.SettingsController">
     <children>
-        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" text="Path">
+        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" text="Output Path">
             <content>
                 <VBox minHeight="0.0" minWidth="0.0" spacing="10.0">
                     <children>
