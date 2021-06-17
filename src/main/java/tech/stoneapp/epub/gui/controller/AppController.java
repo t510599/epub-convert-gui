@@ -18,11 +18,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -40,7 +40,7 @@ import tech.stoneapp.epub.util.DesktopAPI;
 import tech.stoneapp.epub.util.Pair;
 
 public class AppController implements Initializable {
-    @FXML AnchorPane root;
+    @FXML GridPane root;
     @FXML Button settingsButton;
     @FXML Button importDirectoryButton;
     @FXML Button addFileButton;
@@ -52,7 +52,6 @@ public class AppController implements Initializable {
     @FXML TableColumn<EPUBFile, String> nameColumn;
     @FXML TableColumn<EPUBFile, String> pathColumn;
 
-    @FXML Pane statusPane;
     @FXML Label modeLabel;
     @FXML Label progressLabel;
     @FXML Button convertButton;
@@ -69,6 +68,9 @@ public class AppController implements Initializable {
 
         // set table
         fileList.setItems(state.getFiles());
+        fileList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        pathColumn.minWidthProperty().bind(fileList.widthProperty().multiply(0.66));
+
         statusColumn.setCellValueFactory(data -> data.getValue().getStatus().asString());
         statusColumn.setCellFactory(data -> new TableCell<>() {
             @Override

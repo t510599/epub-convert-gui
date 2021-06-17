@@ -1,39 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="720.0" prefHeight="540.0" prefWidth="720.0" styleClass="primary" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.AppController">
-   <children>
-      <TableView fx:id="fileList" focusTraversable="false" layoutX="30.0" layoutY="65.0" prefHeight="315.0" prefWidth="660.0">
-        <placeholder>
-          <Label>Drop files here or click Add Files...</Label>
-        </placeholder>
-        <columns>
-          <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
-          <TableColumn fx:id="nameColumn" prefWidth="175.0" text="Name" />
-          <TableColumn fx:id="pathColumn" prefWidth="410.0" text="Path" />
-        </columns>
-      </TableView>
-      <Pane fx:id="statusPane" layoutX="30.0" layoutY="390.0" prefHeight="130.0" prefWidth="660.0" style="-fx-border-radius: 5px;">
-         <children>
-            <Label fx:id="modeLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="521.0" layoutY="15.0" prefHeight="15.0" prefWidth="125.0" text="SELECTING" />
-            <ProgressBar fx:id="progressbar" layoutX="230.0" layoutY="47.0" prefWidth="200.0" progress="0.0" />
-            <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="318.0" layoutY="22.0" text="0 / 0" />
-            <Button fx:id="convertButton" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="81.0" mnemonicParsing="false" styleClass="primary" text="Convert" />
-         </children>
-      </Pane>
-      <Button fx:id="importDirectoryButton" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" text="Import Directory..." />
-      <Button fx:id="addFileButton" layoutX="161.0" layoutY="30.0" mnemonicParsing="false" text="Add Files..." />
-      <Button fx:id="removeFileButton" disable="true" layoutX="621.0" layoutY="30.0" mnemonicParsing="false" text="Remove" />
-      <Button fx:id="showFileButton" disable="true" layoutX="509.0" layoutY="30.0" mnemonicParsing="false" text="Show in folder" />
-       <!-- placeholder of settings icon -->
-      <Circle fx:id="settings" fill="DODGERBLUE" layoutX="704.0" layoutY="16.0" onMouseClicked="#settings" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-   </children>
-   <stylesheets>
-      <URL value="@../css/general.css" />
-      <URL value="@../css/app.css" />
-   </stylesheets>
-</AnchorPane>
+<GridPane fx:id="root" prefHeight="540.0" prefWidth="720.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.AppController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="130.0" prefHeight="130.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+    </padding>
+    <stylesheets>
+        <URL value="@../css/general.css" />
+        <URL value="@../css/app.css" />
+    </stylesheets>
+    <children>
+        <Button fx:id="settingsButton" layoutX="690.0" layoutY="3.0" mnemonicParsing="false" GridPane.halignment="RIGHT">
+            <graphic>
+                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/baseline_settings_black_24dp.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <GridPane GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+            </rowConstraints>
+            <children>
+                <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="0">
+                    <children>
+                        <Button fx:id="importDirectoryButton" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" text="Import Directory..." />
+                        <Button fx:id="addFileButton" layoutX="161.0" layoutY="30.0" mnemonicParsing="false" text="Add Files..." />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
+                    <children>
+                        <Button fx:id="showFileButton" alignment="CENTER_RIGHT" disable="true" layoutX="509.0" layoutY="30.0" mnemonicParsing="false" text="Show in folder" />
+                        <Button fx:id="removeFileButton" alignment="CENTER_RIGHT" disable="true" layoutX="621.0" layoutY="30.0" mnemonicParsing="false" text="Remove" />
+                    </children>
+                </HBox>
+            </children>
+        </GridPane>
+        <TableView fx:id="fileList" focusTraversable="false" layoutX="30.0" layoutY="65.0" prefHeight="315.0" prefWidth="660.0" GridPane.rowIndex="2">
+            <placeholder>
+                <Label>Drop files here or click Add Files...</Label>
+            </placeholder>
+            <columns>
+                <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
+                <TableColumn fx:id="nameColumn" prefWidth="175.0" text="Name" />
+                <TableColumn fx:id="pathColumn" prefWidth="440.0" text="Path" />
+            </columns>
+        </TableView>
+        <GridPane fx:id="statusPane" minHeight="130.0" prefHeight="130.0" GridPane.rowIndex="3">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label fx:id="modeLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="521.0" layoutY="15.0" prefHeight="15.0" prefWidth="140.0" text="SELECTING" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                <ProgressBar fx:id="progressbar" layoutX="230.0" layoutY="47.0" maxWidth="400.0" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </GridPane.margin>
+                </ProgressBar>
+                <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="318.0" layoutY="22.0" text="0 / 0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                <Button fx:id="convertButton" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="81.0" mnemonicParsing="false" styleClass="primary" text="Convert" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            </children>
+        </GridPane>
+    </children>
+</GridPane>
