@@ -31,6 +31,17 @@ Java verision >= 15.
     - `java -jar epub-0.1.jar --output ~/epub/output/ --filename TRANSLATE ~/epub/*.epub`
     - See more argument description with `-h` or `--help`.
 
+## Build
+Run App with gradle
+```
+gradlew run
+```
+
+Build JAR
+```
+gradlew jar
+```
+
 ## Used Libraries
 - JavaFX 15.0.1
 - [houbb/opencc4j](https://github.com/houbb/opencc4j)
