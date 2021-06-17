@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -16,7 +17,7 @@
                      </toggleGroup></RadioButton>
                         <RadioButton mnemonicParsing="false" toggleGroup="$path">
                             <graphic>
-                                <HBox spacing="5.0">
+                                <HBox alignment="CENTER_LEFT" spacing="5.0">
                                    <children>
                                        <TextField fx:id="pathInput" editable="false" focusTraversable="false" promptText="Select output directory..." />
                                        <Button fx:id="selectPathButton" mnemonicParsing="false" text="SELECT" />
@@ -36,7 +37,7 @@
                 <HBox alignment="CENTER_LEFT" minHeight="0.0" minWidth="0.0" spacing="10.0">
                     <children>
                         <Label text="Output Filename" />
-                        <ChoiceBox fx:id="filenameChoiceBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+                        <ChoiceBox fx:id="filenameChoiceBox" maxWidth="1.7976931348623157E308" prefWidth="225.0" />
                         <CheckBox fx:id="overwriteCheckbox" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Overwrite" />
                     </children>
                 </HBox>
@@ -54,7 +55,7 @@
         </TitledPane>
         <HBox alignment="CENTER_RIGHT" spacing="10.0">
             <children>
-                <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                <Button fx:id="saveButton" mnemonicParsing="false" styleClass="primary" text="Save" />
                 <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
             </children>
         </HBox>
@@ -62,4 +63,8 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <stylesheets>
+      <URL value="@../css/general.css" />
+      <URL value="@../css/settings.css" />
+   </stylesheets>
 </VBox>
