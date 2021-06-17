@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="720.0" prefHeight="540.0" prefWidth="720.0" styleClass="primary" stylesheets="@../css/app.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.AppController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="540.0" minWidth="720.0" prefHeight="540.0" prefWidth="720.0" styleClass="primary" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tech.stoneapp.epub.gui.controller.AppController">
    <children>
       <TableView fx:id="fileList" focusTraversable="false" layoutX="30.0" layoutY="65.0" prefHeight="315.0" prefWidth="660.0">
         <placeholder>
@@ -31,4 +32,8 @@
        <!-- placeholder of settings icon -->
       <Circle fx:id="settings" fill="DODGERBLUE" layoutX="704.0" layoutY="16.0" onMouseClicked="#settings" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
+   <stylesheets>
+      <URL value="@../css/general.css" />
+      <URL value="@../css/app.css" />
+   </stylesheets>
 </AnchorPane>
