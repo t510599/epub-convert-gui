@@ -1,15 +1,26 @@
 package tech.stoneapp.epub.model;
 
-import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class AppConfig {
     // empty stands for saving to input file's directory
     private String outputDirectory = "";
     private OutputFilenameMode outputFilenameMode = OutputFilenameMode.TRANSLATE;
     private boolean overwrite = true;
-    private Alert.AlertType alertLevel = Alert.AlertType.INFORMATION;
+    private AlertType alertLevel = AlertType.INFORMATION;
 
     public AppConfig() {}
+
+    public AppConfig(String outputPath, OutputFilenameMode outputMode, boolean outputOverwrite, AlertType minAlertLevel) {
+        outputDirectory = outputPath;
+        outputFilenameMode = outputMode;
+        overwrite = outputOverwrite;
+        alertLevel = minAlertLevel;
+    }
+
+    public String getOutputDirectory() {
+        return outputDirectory;
+    }
 
     public OutputFilenameMode getOutputFilenameMode() {
         return outputFilenameMode;
@@ -19,12 +30,17 @@ public class AppConfig {
         return overwrite;
     }
 
-    public Alert.AlertType getAlertLevel() {
+    public AlertType getAlertLevel() {
         return alertLevel;
     }
 
     public static AppConfig loadConfig() {
+        // TODO: load config from disk by gson
         return new AppConfig();
+    }
+
+    public static void saveConfig(AppConfig config) {
+        // TODO: save config to disk by gson
     }
 
     public enum OutputFilenameMode {
