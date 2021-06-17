@@ -5,6 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
 public class AppConfig {
@@ -47,14 +48,18 @@ public class AppConfig {
 
     public static AppConfig loadConfig() {
         Gson gson = new Gson();
+        AppConfig config;
         try {
-            return gson.fromJson(Files.readString(new File("config.json").toPath()), AppConfig.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-
+            config = gson.fromJson(Files.readString(new File("config.json").toPath()), AppConfig.class);
+        } catch (Exception e) {
             // if load from file failed, use default one.
-            return new AppConfig();
+            config = new AppConfig();
+            AppConfig.saveConfig(config);
+
+            if (!(e instanceof NoSuchFileException))
+                e.printStackTrace();
         }
+        return config;
     }
 
     public static void saveConfig(AppConfig config) {
