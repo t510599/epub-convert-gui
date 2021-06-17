@@ -28,6 +28,9 @@ public class AppConfig {
     }
 
     public OutputFilenameMode getOutputFilenameMode() {
+        // if config got error enum value, it would become null. so set to default value.
+        if (outputFilenameMode == null) outputFilenameMode = OutputFilenameMode.TRANSLATE;
+
         return outputFilenameMode;
     }
 
@@ -36,6 +39,9 @@ public class AppConfig {
     }
 
     public AlertType getAlertLevel() {
+        // if config got error enum value, it would become null. so set to default value.
+        if (alertLevel == null) alertLevel = AlertType.INFORMATION;
+
         return alertLevel;
     }
 
@@ -53,9 +59,8 @@ public class AppConfig {
 
     public static void saveConfig(AppConfig config) {
         Gson gson = new Gson();
-        String json = gson.toJson(config);
         try (PrintWriter out = new PrintWriter("config.json");){
-            out.print(json);
+            gson.toJson(config, out);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
