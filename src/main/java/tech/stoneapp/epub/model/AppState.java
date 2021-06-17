@@ -4,11 +4,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class AppState {
     private SimpleListProperty<EPUBFile> files = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ObjectProperty<AppMode> mode = new SimpleObjectProperty<>(AppMode.SELECTING);
+    private static AppConfig config = AppConfig.loadConfig();
 
     public AppState() {
         init();
@@ -44,5 +44,9 @@ public class AppState {
 
     public void setMode(AppMode mode) {
         this.mode.set(mode);
+    }
+
+    public AppConfig getConfig() {
+        return config;
     }
 }
