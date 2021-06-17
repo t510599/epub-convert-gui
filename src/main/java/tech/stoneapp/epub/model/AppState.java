@@ -46,6 +46,10 @@ public class AppState {
         this.mode.set(mode);
     }
 
+    public void reloadConfig() {
+        config = AppConfig.loadConfig();
+    }
+
     public AppConfig getConfig() {
         return config;
     }
