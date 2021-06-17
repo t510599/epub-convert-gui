@@ -38,8 +38,19 @@ public class EPUBConvertor {
         return instance;
     }
 
-    public void convert(EPUBFile epub) throws IOException, ArchiveException, InterruptedException {
+    public void convert(EPUBFile epub, AppConfig config) throws IOException, ArchiveException, InterruptedException {
         if (epub.getStatusValue() != ConvertStatus.PENDING) return;
+
+        Path outputPath = Paths.get(
+                config.getOutputDirectory().equals("") ? epub.getFile().getParent() : config.getOutputDirectory(),
+                generateFilename(config.getOutputFilenameMode(), epub.getFilename())
+        );
+
+        // do not overwrite the exist file
+        if (!config.isOverwrite() && outputPath.toFile().exists()) {
+            epub.updateStatus(ConvertStatus.SKIPPED, accessor);
+            return;
+        }
 
         epub.updateStatus(ConvertStatus.CONVERTING, accessor);
 
@@ -82,7 +93,6 @@ public class EPUBConvertor {
             // in case interrupt signal wasn't caught in while loop above
             if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
 
-            Path outputPath = Paths.get(epub.getFile().getParent(), ZhConverterUtil.toTraditional(epub.getFilename()));
             OutputStream newFile = new FileOutputStream(outputPath.toString());
             newFile.write(newMemoryFile.toByteArray());
             newFile.close();
@@ -93,5 +103,15 @@ public class EPUBConvertor {
             epub.updateStatus(ConvertStatus.FAILED, accessor);
             throw ex;
         }
+    }
+
+    private String generateFilename(AppConfig.OutputFilenameMode mode, String originalFilename) {
+        String filename = originalFilename;
+        switch (mode) {
+            case TRANSLATE -> filename = ZhConverterUtil.toTraditional(originalFilename);
+            case SUFFIX -> filename = originalFilename.replace(".epub", "-tc.epub");
+            case BOTH -> filename = ZhConverterUtil.toTraditional(originalFilename).replace(".epub", "-tc.epub");
+        }
+        return filename;
     }
 }
