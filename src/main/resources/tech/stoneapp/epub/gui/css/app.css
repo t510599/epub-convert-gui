@@ -60,6 +60,13 @@
     -fx-background-color: #FFFFFF;
 }
 
+#modeLabel {
+    -fx-padding: 5px;
+    -fx-background-color: #E9E9E9;
+    -fx-border-width: 0 0 0 5px;
+    -fx-border-color: #919191;
+}
+
 #progressLabel {
     -fx-text-alignment: center;
 }
