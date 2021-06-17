@@ -55,7 +55,7 @@ public class AppController implements Initializable {
     @FXML Button convertButton;
     @FXML ProgressBar progressbar;
 
-    private AppState state = new AppState();
+    private AppState state = GUILauncher.getState();
     private EPUBConvertor convertor = EPUBConvertor.getInstance();
     private ConversionTask conversionTask;
     private Thread conversionThread;

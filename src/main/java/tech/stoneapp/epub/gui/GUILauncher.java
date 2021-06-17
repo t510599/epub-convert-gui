@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tech.stoneapp.epub.model.AppState;
 
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ public class GUILauncher extends Application {
     private static final int screenHeight = 540;
     private static Stage mainStage;
     private static Stage settingsStage;
+    private static AppState state = new AppState();
 
     @Override
     public void start(Stage stage) {
@@ -45,6 +47,10 @@ public class GUILauncher extends Application {
 
     public static Stage getMainStage() {
         return mainStage;
+    }
+
+    public static AppState getState() {
+        return state;
     }
 
     public static void main(String[] args) {
