@@ -5,18 +5,20 @@ import java.io.*;
 import org.apache.commons.compress.archivers.ArchiveException;
 import tech.stoneapp.epub.convertor.EPUBConvertor;
 import tech.stoneapp.epub.exception.NotEPUBException;
+import tech.stoneapp.epub.model.AppConfig;
 import tech.stoneapp.epub.model.EPUBFile;
 
 public class CommandLineApp {
     public static void main(String[] args) {
         EPUBConvertor convertor = EPUBConvertor.getInstance();
+        AppConfig config = new AppConfig();
 
         for (String filepath: args) {
             long startTime = System.currentTimeMillis();
 
             try {
                 EPUBFile epub = new EPUBFile(filepath);
-                convertor.convert(epub);
+                convertor.convert(epub, config);
 
                 long currentTime = System.currentTimeMillis();
                 String message = "";

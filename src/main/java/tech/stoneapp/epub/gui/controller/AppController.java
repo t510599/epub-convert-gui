@@ -360,7 +360,7 @@ public class AppController implements Initializable {
             this.updateProgress(0, files.size());
             for (EPUBFile file: files) {
                 try {
-                    convertor.convert(file);
+                    convertor.convert(file, state.getConfig());
                     successConversion++;
                 } catch (InterruptedException e) {
                     throw e;
