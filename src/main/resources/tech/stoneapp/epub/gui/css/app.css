@@ -2,6 +2,12 @@
     -fx-background-color: #FFF;
 }
 
+#settingsButton {
+    -fx-padding: 5px;
+    -fx-border-radius: 1024px;
+    -fx-background-radius: 1024px;
+}
+
 /* file list */
 #fileList.table-view {
     -fx-background-radius: 2.5px;
