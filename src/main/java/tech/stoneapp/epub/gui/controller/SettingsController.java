@@ -73,6 +73,11 @@ public class SettingsController implements Initializable {
         alertLevel.getSelectionModel().select(config.getAlertLevel());
 
         saveButton.setOnMouseClicked(ev -> {
+            if (path.getToggles().indexOf(path.getSelectedToggle()) == 1 && pathInput.getText().equals("")) {
+                AlertHelper.show(Alert.AlertType.ERROR, "You must select a directory.", config.getAlertLevel());
+                return;
+            }
+
             AppConfig.saveConfig(new AppConfig(
                     path.getToggles().indexOf(path.getSelectedToggle()) == 0 ? null : pathInput.getText(),
                     filenameChoiceBox.getSelectionModel().getSelectedItem(),
