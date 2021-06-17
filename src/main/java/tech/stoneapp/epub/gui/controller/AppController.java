@@ -325,8 +325,10 @@ public class AppController implements Initializable {
 
         conversionTask = new ConversionTask(state.getFiles());
         // bind event listeners
+        // TODO: show result if task failed
         conversionTask.setOnSucceeded(ev -> {
             state.setMode(AppMode.DONE);
+            showConversionResult(conversionTask.getValue().getLeftValue());
         });
         conversionTask.setOnFailed(ev -> {
             state.setMode(AppMode.INTERRUPTED);
@@ -350,6 +352,14 @@ public class AppController implements Initializable {
 
         if (conversionTask != null) conversionTask.cancel();
         state.setMode(AppMode.INTERRUPTED);
+    }
+
+    private void showConversionResult(int success) {
+        AlertHelper.show(
+                Alert.AlertType.INFORMATION,
+                MessageFormat.format("Successfully converted {0} files", success),
+                state.getConfig().getAlertLevel()
+        );
     }
 
     private class ConversionTask extends Task<Pair<Integer, Integer>> {
