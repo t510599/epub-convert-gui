@@ -27,6 +27,7 @@ public class SettingsController implements Initializable {
     @FXML private Button cancelButton;
 
     private AppState state = GUILauncher.getState();
+    private AppConfig config = state.getConfig();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,11 +36,16 @@ public class SettingsController implements Initializable {
                 AppConfig.OutputFilenameMode.SUFFIX,
                 AppConfig.OutputFilenameMode.BOTH
         );
+        filenameChoiceBox.getSelectionModel().select(config.getOutputFilenameMode());
+        overwriteCheckbox.setSelected(config.isOverwrite());
+
         alertLevel.getItems().addAll(
                 Alert.AlertType.INFORMATION,
                 Alert.AlertType.WARNING,
                 Alert.AlertType.ERROR
         );
+        alertLevel.getSelectionModel().select(config.getAlertLevel());
+
         cancelButton.setOnMouseClicked(ev -> {
             GUILauncher.getSettingsStage().close();
         });

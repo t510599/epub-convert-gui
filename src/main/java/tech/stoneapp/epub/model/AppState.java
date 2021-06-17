@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 public class AppState {
     private SimpleListProperty<EPUBFile> files = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ObjectProperty<AppMode> mode = new SimpleObjectProperty<>(AppMode.SELECTING);
-    private static AppConfig config = AppConfig.loadConfig();
+    private AppConfig config = AppConfig.loadConfig();
 
     public AppState() {
         init();

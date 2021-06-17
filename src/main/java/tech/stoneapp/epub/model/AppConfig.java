@@ -15,6 +15,14 @@ public class AppConfig {
         return outputFilenameMode;
     }
 
+    public boolean isOverwrite() {
+        return overwrite;
+    }
+
+    public Alert.AlertType getAlertLevel() {
+        return alertLevel;
+    }
+
     public static AppConfig loadConfig() {
         return new AppConfig();
     }
