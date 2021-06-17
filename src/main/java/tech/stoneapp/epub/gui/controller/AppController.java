@@ -41,6 +41,7 @@ import tech.stoneapp.epub.util.Pair;
 
 public class AppController implements Initializable {
     @FXML AnchorPane root;
+    @FXML Button settingsButton;
     @FXML Button importDirectoryButton;
     @FXML Button addFileButton;
     @FXML Button removeFileButton;
@@ -244,6 +245,10 @@ public class AppController implements Initializable {
 
         modeLabel.textProperty().bind(state.getMode().asString());
         /* status pane setup end */
+
+        settingsButton.setOnMouseClicked(ev -> {
+            GUILauncher.showSettings();
+        });
     }
 
     private void bindProgressLabel(AppMode mode) {
