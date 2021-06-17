@@ -1,3 +1,8 @@
+/*
+    Several colors and styles are from TocasUI (https://github.com/teacat/tocas, MIT License).
+    Including: background-color, border-color, progressbar styles.
+*/
+
 #root {
     -fx-background-color: #FFF;
 }

@@ -1,12 +1,13 @@
+/*
+    Several colors and styles are from TocasUI (https://github.com/teacat/tocas, MIT License).
+    Including: background-color, border-color, buttons, form elements.
+*/
+
 .titled-pane .title {
     -fx-background-color: #F7F7F7;
     -fx-border-color: #C9C9C9;
     -fx-border-width: 1px 1px 0 1px;
     -fx-border-radius: 2px;
-}
-
-.radio-button {
-
 }
 
 .radio-button .radio {
