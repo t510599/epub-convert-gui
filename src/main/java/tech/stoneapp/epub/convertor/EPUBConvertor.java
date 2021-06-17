@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.compress.archivers.zip.ZipFile;
@@ -26,7 +27,7 @@ public class EPUBConvertor {
     private static final EPUBAccessor accessor = new EPUBAccessor();
 
     private final TextFileConvertor textFileConvertor = new TextFileConvertor();
-    private final List textFileExtensions = Arrays.asList("htm", "html", "xhtml", "css", "ncx", "opf");
+    private final List<String> textFileExtensions = Arrays.asList("htm", "html", "xhtml", "css", "ncx", "opf");
 
     // singleton
     private static EPUBConvertor instance;
@@ -42,7 +43,7 @@ public class EPUBConvertor {
         if (epub.getStatusValue() != ConvertStatus.PENDING) return;
 
         Path outputPath = Paths.get(
-                config.getOutputDirectory().equals("") ? epub.getFile().getParent() : config.getOutputDirectory(),
+                Objects.isNull(config.getOutputDirectory()) ? epub.getFile().getParent() : config.getOutputDirectory(),
                 generateFilename(config.getOutputFilenameMode(), epub.getFilename())
         );
 

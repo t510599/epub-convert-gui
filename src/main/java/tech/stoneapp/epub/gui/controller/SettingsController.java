@@ -36,8 +36,7 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String outputDirectory = config.getOutputDirectory();
-        File directory = new File(outputDirectory);
-        if (outputDirectory.equals("") || !directory.exists()) {
+        if (outputDirectory == null || !(new File(outputDirectory).exists())) {
             path.selectToggle(path.getToggles().get(0));
         } else {
             path.selectToggle(path.getToggles().get(1));
@@ -75,7 +74,7 @@ public class SettingsController implements Initializable {
 
         saveButton.setOnMouseClicked(ev -> {
             AppConfig.saveConfig(new AppConfig(
-                    path.getToggles().indexOf(path.getSelectedToggle()) == 0 ? "" : pathInput.getText(),
+                    path.getToggles().indexOf(path.getSelectedToggle()) == 0 ? null : pathInput.getText(),
                     filenameChoiceBox.getSelectionModel().getSelectedItem(),
                     overwriteCheckbox.isSelected(),
                     alertLevel.getSelectionModel().getSelectedItem()

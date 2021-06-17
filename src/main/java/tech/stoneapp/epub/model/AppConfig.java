@@ -8,8 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class AppConfig {
-    // empty stands for saving to input file's directory
-    private String outputDirectory = "";
+    // null stands for saving to input file's directory
+    private String outputDirectory = null;
     private OutputFilenameMode outputFilenameMode = OutputFilenameMode.TRANSLATE;
     private boolean overwrite = true;
     private AlertType alertLevel = AlertType.INFORMATION;
