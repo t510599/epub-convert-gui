@@ -15,11 +15,11 @@
                      <toggleGroup>
                         <ToggleGroup fx:id="path" />
                      </toggleGroup></RadioButton>
-                        <RadioButton mnemonicParsing="false" toggleGroup="$path">
+                        <RadioButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" toggleGroup="$path" VBox.vgrow="ALWAYS">
                             <graphic>
-                                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="401.0" spacing="5.0">
                                    <children>
-                                       <TextField fx:id="pathInput" editable="false" focusTraversable="false" promptText="Select output directory..." />
+                                       <TextField fx:id="pathInput" editable="false" focusTraversable="false" promptText="Select output directory..." HBox.hgrow="ALWAYS" />
                                        <Button fx:id="selectPathButton" mnemonicParsing="false" text="SELECT" />
                                    </children>
                                    <padding>
@@ -37,7 +37,7 @@
                 <HBox alignment="CENTER_LEFT" minHeight="0.0" minWidth="0.0" spacing="10.0">
                     <children>
                         <Label text="Output Filename" />
-                        <ChoiceBox fx:id="filenameChoiceBox" maxWidth="1.7976931348623157E308" prefWidth="225.0" />
+                        <ChoiceBox fx:id="filenameChoiceBox" maxWidth="1.7976931348623157E308" prefWidth="225.0" HBox.hgrow="ALWAYS" />
                         <CheckBox fx:id="overwriteCheckbox" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Overwrite" />
                     </children>
                 </HBox>
