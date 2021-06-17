@@ -73,10 +73,10 @@ public class AppController implements Initializable {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
+                setText(item);
                 if (empty) return;
 
                 toggleClassMap(this, Map.of("positive", item.equals("SUCCESS"), "negative", item.equals("FAILED")));
-                setText(item);
             }
         });
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("filename"));
