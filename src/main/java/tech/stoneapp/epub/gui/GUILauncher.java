@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tech.stoneapp.epub.model.AppState;
@@ -24,8 +25,10 @@ public class GUILauncher extends Application {
 
             Parent root = FXMLLoader.load(getClass().getResource("fxml/app.fxml"));
             Scene scene = new Scene(root, screenWidth, screenHeight);
+            Image appIcon = new Image(getClass().getResourceAsStream("image/baseline_book_black_24dp.png"));
 
             mainStage.setTitle("EPUB Convert");
+            mainStage.getIcons().add(appIcon);
             mainStage.setScene(scene);
             mainStage.show();
         } catch (IOException e) {
@@ -40,8 +43,10 @@ public class GUILauncher extends Application {
             settingsStage = new Stage();
             Parent root = FXMLLoader.load(GUILauncher.class.getResource("fxml/settings.fxml"));
             Scene scene = new Scene(root, screenWidth * 2 / 3, screenHeight * 2 / 3);
+            Image appIcon = new Image(GUILauncher.class.getResourceAsStream("image/baseline_settings_black_24dp.png"));
 
             settingsStage.setTitle("Settings");
+            settingsStage.getIcons().add(appIcon);
             settingsStage.setScene(scene);
             // lock main window until settings close.
             settingsStage.initModality(Modality.APPLICATION_MODAL);
