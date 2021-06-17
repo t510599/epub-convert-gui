@@ -9,6 +9,7 @@ import javafx.stage.DirectoryChooser;
 import tech.stoneapp.epub.gui.GUILauncher;
 import tech.stoneapp.epub.model.AppConfig;
 import tech.stoneapp.epub.model.AppState;
+import tech.stoneapp.epub.util.AlertHelper;
 
 import java.io.File;
 import java.net.URL;
@@ -50,6 +51,7 @@ public class SettingsController implements Initializable {
             if (dir == null) return;
 
             if (!dir.exists()) {
+                AlertHelper.show(Alert.AlertType.ERROR, "Directory does not exist!", config.getAlertLevel());
                 return;
             }
             pathInput.setText(dir.getAbsolutePath());

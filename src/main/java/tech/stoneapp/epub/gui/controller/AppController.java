@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
@@ -34,6 +35,7 @@ import tech.stoneapp.epub.model.AppMode;
 import tech.stoneapp.epub.model.AppState;
 import tech.stoneapp.epub.model.ConvertStatus;
 import tech.stoneapp.epub.model.EPUBFile;
+import tech.stoneapp.epub.util.AlertHelper;
 import tech.stoneapp.epub.util.DesktopAPI;
 import tech.stoneapp.epub.util.Pair;
 
@@ -128,12 +130,12 @@ public class AppController implements Initializable {
 
             File targetFile = new File(targetPath);
             if (!targetFile.exists()) {
-                new Alert(Alert.AlertType.ERROR, "File may be moved or deleted.").show();
+                AlertHelper.show(Alert.AlertType.ERROR, "File may be moved or deleted.", state.getConfig().getAlertLevel());
                 return;
             }
 
             if (!DesktopAPI.showInFolder(targetFile)) {
-                new Alert(Alert.AlertType.ERROR, "Show In Folder is not supported on your system.").show();
+                AlertHelper.show(Alert.AlertType.ERROR, "Show In Folder is not supported on your system.", state.getConfig().getAlertLevel());
             };
         });
         // only available if file got selected
@@ -164,8 +166,7 @@ public class AppController implements Initializable {
 
                 // only show alert if there is only one file and it is not an EPUB.
                 if (files.size() == 1 && files.get(0).isFile() && !EPUBFile.isEPUB(files.get(0))) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "This file is not EPUB!");
-                    alert.show();
+                    AlertHelper.show(Alert.AlertType.WARNING, "This file is not EPUB!", state.getConfig().getAlertLevel());
                     ev.consume();
                     return;
                 }
@@ -305,11 +306,11 @@ public class AppController implements Initializable {
             state.addFile(epub);
         }
 
-        Alert importAlert = new Alert(
+        AlertHelper.show(
                 Alert.AlertType.INFORMATION,
-                MessageFormat.format("Imported Files: {0}", state.getFiles().size() - beforeImportFilesCount)
+                MessageFormat.format("Imported Files: {0}", state.getFiles().size() - beforeImportFilesCount),
+                state.getConfig().getAlertLevel()
         );
-        importAlert.show();
     }
 
     private void startConversion() {
