@@ -6,7 +6,6 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 
 public class AppConfig {
     // null stands for saving to input file's directory
