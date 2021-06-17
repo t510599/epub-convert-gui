@@ -21,7 +21,7 @@ public class SettingsController implements Initializable {
     @FXML private ChoiceBox<AppConfig.OutputFilenameMode> filenameChoiceBox;
     @FXML private CheckBox overwriteCheckbox;
 
-    @FXML private ChoiceBox alertLevel;
+    @FXML private ChoiceBox<Alert.AlertType> alertLevel;
 
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
@@ -34,6 +34,11 @@ public class SettingsController implements Initializable {
                 AppConfig.OutputFilenameMode.TRANSLATE,
                 AppConfig.OutputFilenameMode.SUFFIX,
                 AppConfig.OutputFilenameMode.BOTH
+        );
+        alertLevel.getItems().addAll(
+                Alert.AlertType.INFORMATION,
+                Alert.AlertType.WARNING,
+                Alert.AlertType.ERROR
         );
         cancelButton.setOnMouseClicked(ev -> {
             GUILauncher.getSettingsStage().close();
