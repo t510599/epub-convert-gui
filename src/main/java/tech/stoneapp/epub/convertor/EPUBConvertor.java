@@ -27,6 +27,7 @@ public class EPUBConvertor {
     private static final EPUBAccessor accessor = new EPUBAccessor();
 
     private final TextFileConvertor textFileConvertor = new TextFileConvertor();
+    private final MetaFileConvertor metaFileConvertor = new MetaFileConvertor();
     private final List<String> textFileExtensions = Arrays.asList("htm", "html", "xhtml", "css", "ncx", "opf");
 
     // singleton
@@ -79,7 +80,10 @@ public class EPUBConvertor {
                 // convert only text file
                 if (textFileExtensions.contains(extension)) {
                     // replace old stream to converted stream
-                    stream = textFileConvertor.convert(stream);
+                    if (extension.equals("opf"))
+                        stream = metaFileConvertor.convert(stream);
+                    else
+                        stream = textFileConvertor.convert(stream);
                 }
                 // copy file to new EPUB
                 IOUtils.copy(stream, newEPUB);
