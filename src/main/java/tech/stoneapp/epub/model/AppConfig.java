@@ -1,6 +1,11 @@
 package tech.stoneapp.epub.model;
 
+import com.google.gson.Gson;
 import javafx.scene.control.Alert.AlertType;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class AppConfig {
     // empty stands for saving to input file's directory
@@ -35,12 +40,25 @@ public class AppConfig {
     }
 
     public static AppConfig loadConfig() {
-        // TODO: load config from disk by gson
-        return new AppConfig();
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(Files.readString(new File("config.json").toPath()), AppConfig.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            // if load from file failed, use default one.
+            return new AppConfig();
+        }
     }
 
     public static void saveConfig(AppConfig config) {
-        // TODO: save config to disk by gson
+        Gson gson = new Gson();
+        String json = gson.toJson(config);
+        try (PrintWriter out = new PrintWriter("config.json");){
+            out.print(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public enum OutputFilenameMode {

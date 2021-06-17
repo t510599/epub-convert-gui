@@ -73,6 +73,16 @@ public class SettingsController implements Initializable {
         );
         alertLevel.getSelectionModel().select(config.getAlertLevel());
 
+        saveButton.setOnMouseClicked(ev -> {
+            AppConfig.saveConfig(new AppConfig(
+                    path.getToggles().indexOf(path.getSelectedToggle()) == 0 ? "" : pathInput.getText(),
+                    filenameChoiceBox.getSelectionModel().getSelectedItem(),
+                    overwriteCheckbox.isSelected(),
+                    alertLevel.getSelectionModel().getSelectedItem()
+            ));
+            state.reloadConfig();
+            GUILauncher.getSettingsStage().close();
+        });
         cancelButton.setOnMouseClicked(ev -> {
             GUILauncher.getSettingsStage().close();
         });
