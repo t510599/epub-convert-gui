@@ -30,6 +30,8 @@ public class GUILauncher extends Application {
             mainStage.setTitle("EPUB Convert");
             mainStage.getIcons().add(appIcon);
             mainStage.setScene(scene);
+            mainStage.setMinWidth(screenWidth);
+            mainStage.setMinHeight(screenHeight);
             mainStage.show();
         } catch (IOException e) {
             e.printStackTrace();
