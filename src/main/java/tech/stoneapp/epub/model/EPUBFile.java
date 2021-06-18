@@ -46,7 +46,8 @@ public class EPUBFile {
 
     public static boolean isEPUB(File file) {
         try {
-            return Files.probeContentType(file.toPath()).equals("application/epub+zip");
+            String mime = Files.probeContentType(file.toPath());
+            return mime == null ? file.getPath().endsWith(".epub") : mime.equals("application/epub+zip");
         } catch (IOException e) {
             return false;
         }
