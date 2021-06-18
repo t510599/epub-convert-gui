@@ -21,12 +21,12 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew jar
     - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      id: vars
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          title: "Release ${{ steps.vars.outputs.tag }}"
-          files: |
-            build/libs/*.jar
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        title: "Release ${{ steps.vars.outputs.tag }}"
+        files: |
+          build/libs/*.jar
