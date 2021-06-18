@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'tech.stoneapp'
-version '1.0.0'
+version '1.0.0-a'
 def main = 'tech.stoneapp.epub.AppStarter'
 mainClassName = main
 
