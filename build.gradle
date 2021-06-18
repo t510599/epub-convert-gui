@@ -22,13 +22,23 @@ def javaFXPlatform = getJavaFXPlatform()
 def javaFXVersion = "15.0.1"
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.8.7'
-    compile 'com.github.houbb:opencc4j:1.6.1'
-    compile 'org.apache.commons:commons-compress:1.20'
-    compile 'commons-cli:commons-cli:1.4'
-    runtimeOnly "org.openjfx:javafx-base:${javaFXVersion}:${javaFXPlatform}"
-    runtimeOnly "org.openjfx:javafx-controls:${javaFXVersion}:${javaFXPlatform}"
-    compile "org.openjfx:javafx-fxml:${javaFXVersion}:${javaFXPlatform}"
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.github.houbb:opencc4j:1.6.1'
+    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'commons-cli:commons-cli:1.4'
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFXVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFXVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFXVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFXVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFXVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFXVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFXVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFXVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFXVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFXVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFXVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFXVersion, classifier: 'linux'
 }
 
 jar {
