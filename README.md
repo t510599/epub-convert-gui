@@ -41,6 +41,7 @@ Build JAR
 ```
 gradlew jar
 ```
+Output jar would be in `build/libs`.
 
 ## Used Libraries
 - JavaFX 15.0.1
