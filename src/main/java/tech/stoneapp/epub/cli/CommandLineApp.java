@@ -66,12 +66,12 @@ public class CommandLineApp {
         OutputFilenameMode mode = null;
         if (cmd.hasOption("f")) {
             mode = OutputFilenameMode.fromName(cmd.getOptionValue("f"));
+            if (mode == null) System.out.println("Ignored wrong mode. Use default mode (TRANSLATE).");
         }
-        if (mode == null) System.out.println("Ignored wrong mode. Use default mode (TRANSLATE).");
 
         AppConfig config = new AppConfig(
                 path,
-                mode == null ? OutputFilenameMode.TRANSLATE : mode,
+                mode, // we don't need to check null, since we have handled this in getter for GSON parsing issues.
                 cmd.hasOption("w")
         );
 
