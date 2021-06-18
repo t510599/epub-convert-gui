@@ -27,7 +27,7 @@ Java verision = 15.
     - `Show in folder`: select file in system file manager
     - `Remove`: remove file from list
     - `Convert`: start conversion
-    - Drag and Drop: drag file on to the list to import
+    - Drag and Drop: drag files/directories on to the list to import
 - Command
     - `java -jar epub-0.1.jar --output ~/epub/output/ --filename TRANSLATE ~/epub/*.epub`
     - See more argument description with `-h` or `--help`.
