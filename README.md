@@ -9,7 +9,7 @@ Convert simplified chinese to traditional chinese in EPUB with JavaFX GUI.
 - Convert EPUB with GUI / Command
 - Modern, easy-to-use, responsive UI
 - Recursively convert EPUBs in directory
-- Support Drag and Drop to import files
+- Support Drag and Drop to import files / directories
 - Custom Configurations
     - Output Directory
     - Output Filename
@@ -17,7 +17,7 @@ Convert simplified chinese to traditional chinese in EPUB with JavaFX GUI.
     - Minimum alert level
 
 ## Requirements
-Java verision >= 15.
+Java verision = 15.
 
 ## Usage
 - GUI
