@@ -38,7 +38,7 @@ public class CommandLineApp {
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.printf("%s: %s %n", e.getClass().getName(), e.getMessage());
             return;
         }
 
