@@ -5,8 +5,9 @@ Convert simplified chinese to traditional chinese in EPUB with JavaFX GUI.
 ![Screenshot](./Screenshot.png)
 
 ## Feature
+- Cross platform support
 - Convert EPUB with GUI / Command
-- Modern, clear, easy-to-use UI
+- Modern, easy-to-use, responsive UI
 - Recursively convert EPUBs in directory
 - Support Drag and Drop to import files
 - Custom Configurations
