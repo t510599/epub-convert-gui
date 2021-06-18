@@ -3,6 +3,7 @@ package tech.stoneapp.epub.util;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /*
@@ -17,13 +18,16 @@ public class DesktopAPI {
         String path = file.getAbsolutePath();
 
         OS osPlatform = getOS();
-        String command = "";
+        String[] command = null;
         switch (osPlatform) {
+            // magic don't touch
             case windows:
-                command = String.format("explorer.exe /select,\"%s\"", path);
+                // on windows, pass String[] failed.
+                command = new String[] {String.format("explorer.exe /select,\"%s\"", path)};
                 break;
             case macos:
-                command = String.format("open -R \"%s\"", path);
+                // on Mac, pass String failed. ????
+                command = new String[] {"open", "-R", path};
                 break;
             case linux:
                 // use Desktop.getDesktop() to handle files on linux, for there are too many cases on linux.
@@ -40,12 +44,18 @@ public class DesktopAPI {
         return runCommand(command);
     }
 
-    private static boolean runCommand(String command) {
+    private static boolean runCommand(String[] command) {
+        if (command == null) return false;
+
         Process proc;
         try {
-            proc = Runtime.getRuntime().exec(command);
+            // on windows, pass String[] failed. on Mac, pass String failed. ????
+            // magic don't touch
+            proc = command.length == 1 ?
+                    Runtime.getRuntime().exec(command[0]) :
+                    Runtime.getRuntime().exec(command);
             return proc.waitFor(2, TimeUnit.SECONDS);
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
