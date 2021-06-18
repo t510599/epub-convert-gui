@@ -9,7 +9,7 @@ Convert simplified chinese to traditional chinese in EPUB with JavaFX GUI.
 - Modern, clear, easy-to-use UI
 - Recursively convert EPUBs in directory
 - Support Drag and Drop to import files
-- Highly customizable
+- Custom Configurations
     - Output Directory
     - Output Filename
     - Overwrite existing file?
